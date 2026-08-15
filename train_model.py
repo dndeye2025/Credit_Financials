@@ -10,6 +10,7 @@ Genere : model.pkl (le pipeline complet, pret a l'emploi dans Streamlit)
 import pandas as pd
 import numpy as np
 import joblib
+import json
 
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
@@ -139,3 +140,36 @@ print("AUC sur le test set :", roc_auc_score(y_test, y_proba))
 # ---------------------------------------------------------------
 joblib.dump(best_model, "model.pkl")
 print("\nModele sauvegarde dans model.pkl")
+
+# ---------------------------------------------------------------
+# 9. Sauvegarde des metriques + importance des variables
+#    (utilise par l'onglet "Vue d'ensemble" du tableau de bord)
+# ---------------------------------------------------------------
+feature_names = best_model.named_steps["preprocessor"].get_feature_names_out()
+importances = best_model.named_steps["classifier"].feature_importances_
+
+# on nettoie les noms (num__person_age -> person_age)
+clean_names = [f.split("__", 1)[-1] for f in feature_names]
+
+feat_imp = (
+    pd.DataFrame({"variable": clean_names, "importance": importances})
+    .sort_values("importance", ascending=False)
+    .head(12)
+    .to_dict(orient="records")
+)
+
+metrics = {
+    "best_params": grid_search.best_params_,
+    "cv_auc": grid_search.best_score_,
+    "test_auc": roc_auc_score(y_test, y_proba),
+    "accuracy": (y_pred == y_test).mean(),
+    "n_train": len(X_train),
+    "n_test": len(X_test),
+    "confusion_matrix": confusion_matrix(y_test, y_pred).tolist(),
+    "feature_importance": feat_imp,
+}
+
+with open("metrics.json", "w") as f:
+    json.dump(metrics, f, indent=2)
+
+print("Metriques sauvegardees dans metrics.json")

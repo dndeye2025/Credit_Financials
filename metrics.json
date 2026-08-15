@@ -1,0 +1,72 @@
+{
+  "best_params": {
+    "classifier__criterion": "entropy",
+    "classifier__max_depth": null,
+    "classifier__n_estimators": 200
+  },
+  "cv_auc": 0.9353214506077545,
+  "test_auc": 0.9248516855638159,
+  "accuracy": 0.9321338383838383,
+  "n_train": 25343,
+  "n_test": 6336,
+  "confusion_matrix": [
+    [
+      4947,
+      24
+    ],
+    [
+      406,
+      959
+    ]
+  ],
+  "feature_importance": [
+    {
+      "variable": "loan_percent_income",
+      "importance": 0.20118139824305462
+    },
+    {
+      "variable": "person_income",
+      "importance": 0.14175533444191377
+    },
+    {
+      "variable": "loan_int_rate",
+      "importance": 0.11521527280007754
+    },
+    {
+      "variable": "loan_amnt",
+      "importance": 0.07937008379725093
+    },
+    {
+      "variable": "person_emp_length",
+      "importance": 0.06546124915175976
+    },
+    {
+      "variable": "person_home_ownership_RENT",
+      "importance": 0.05068087756788396
+    },
+    {
+      "variable": "person_age",
+      "importance": 0.05063492757247707
+    },
+    {
+      "variable": "loan_grade_D",
+      "importance": 0.0464636940698559
+    },
+    {
+      "variable": "cb_person_cred_hist_length",
+      "importance": 0.039328851267803014
+    },
+    {
+      "variable": "person_home_ownership_MORTGAGE",
+      "importance": 0.026769655083695783
+    },
+    {
+      "variable": "loan_intent_DEBTCONSOLIDATION",
+      "importance": 0.02253978938993307
+    },
+    {
+      "variable": "person_home_ownership_OWN",
+      "importance": 0.0207847779561101
+    }
+  ]
+}
