@@ -87,6 +87,31 @@ st.markdown("""
     section[data-testid="stSidebar"] {
         background-color: #f7f8fa;
     }
+
+    /* Force les couleurs de texte partout (sinon certains elements
+       gardent la couleur claire du theme sombre par defaut de Streamlit,
+       invisible sur fond blanc) */
+    .stApp, .stApp p, .stApp span, .stApp label, .stApp li {
+        color: #1a1a1a;
+    }
+    .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5 {
+        color: #1a1a1a !important;
+    }
+    section[data-testid="stSidebar"] * {
+        color: #1a1a1a !important;
+    }
+    [data-testid="stMetricValue"] {
+        color: #1a1a1a !important;
+    }
+    [data-testid="stMetricLabel"] {
+        color: #5f6368 !important;
+    }
+    [data-testid="stCaptionContainer"], .stCaption, small {
+        color: #5f6368 !important;
+    }
+    [data-testid="stMarkdownContainer"] {
+        color: #1a1a1a !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
