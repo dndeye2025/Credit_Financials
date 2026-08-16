@@ -27,36 +27,36 @@ st.set_page_config(
 # -----------------------------------------------------------
 st.markdown("""
 <style>
-    .stApp { background-color: #0e1117; }
+    .stApp { background-color: #ffffff; }
 
     .main-title {
         font-size: 2.2rem;
         font-weight: 700;
-        color: #fafafa;
+        color: #1a1a1a;
         margin-bottom: 0;
     }
     .subtitle {
-        color: #9aa0a6;
+        color: #5f6368;
         font-size: 1rem;
         margin-top: 0.2rem;
         margin-bottom: 1.5rem;
     }
 
     .metric-card {
-        background: linear-gradient(145deg, #1c1f26, #14171c);
-        border: 1px solid #2a2e37;
+        background: linear-gradient(145deg, #f7f8fa, #eef0f3);
+        border: 1px solid #e0e3e8;
         border-radius: 14px;
         padding: 1.1rem 1.3rem;
         text-align: center;
     }
     .metric-card .label {
-        color: #9aa0a6;
+        color: #5f6368;
         font-size: 0.85rem;
         text-transform: uppercase;
         letter-spacing: 0.04em;
     }
     .metric-card .value {
-        color: #fafafa;
+        color: #1a1a1a;
         font-size: 1.7rem;
         font-weight: 700;
         margin-top: 0.2rem;
@@ -68,24 +68,24 @@ st.markdown("""
         margin-top: 0.5rem;
     }
     .verdict-danger {
-        background: linear-gradient(145deg, #3a1414, #2a0d0d);
-        border: 1px solid #7a2323;
+        background: linear-gradient(145deg, #fdecec, #fbdada);
+        border: 1px solid #f3a9a9;
     }
     .verdict-ok {
-        background: linear-gradient(145deg, #123322, #0d2418);
-        border: 1px solid #1f6b45;
+        background: linear-gradient(145deg, #e9f9ef, #d9f5e3);
+        border: 1px solid #a3e0bb;
     }
     .verdict-title {
         font-size: 1.3rem;
         font-weight: 700;
         margin-bottom: 0.3rem;
     }
-    .verdict-danger .verdict-title { color: #ff6b6b; }
-    .verdict-ok .verdict-title { color: #4ade80; }
-    .verdict-text { color: #d0d3d8; font-size: 0.95rem; }
+    .verdict-danger .verdict-title { color: #d92c2c; }
+    .verdict-ok .verdict-title { color: #1f9d55; }
+    .verdict-text { color: #3c4043; font-size: 0.95rem; }
 
     section[data-testid="stSidebar"] {
-        background-color: #12151a;
+        background-color: #f7f8fa;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -229,29 +229,29 @@ with tab_predict:
             client, prediction, proba_defaut = st.session_state.last_result
 
             # Jauge de risque
-            gauge_color = "#ff6b6b" if proba_defaut >= 0.5 else "#4ade80"
+            gauge_color = "#d92c2c" if proba_defaut >= 0.5 else "#1f9d55"
             fig = go.Figure(go.Indicator(
                 mode="gauge+number",
                 value=proba_defaut * 100,
-                number={"suffix": " %", "font": {"color": "#fafafa", "size": 36}},
+                number={"suffix": " %", "font": {"color": "#1a1a1a", "size": 36}},
                 gauge={
-                    "axis": {"range": [0, 100], "tickcolor": "#9aa0a6"},
+                    "axis": {"range": [0, 100], "tickcolor": "#5f6368"},
                     "bar": {"color": gauge_color},
-                    "bgcolor": "#1c1f26",
+                    "bgcolor": "#f0f2f6",
                     "borderwidth": 0,
                     "steps": [
-                        {"range": [0, 30], "color": "#123322"},
-                        {"range": [30, 60], "color": "#3a3414"},
-                        {"range": [60, 100], "color": "#3a1414"},
+                        {"range": [0, 30], "color": "#e9f9ef"},
+                        {"range": [30, 60], "color": "#fef6e0"},
+                        {"range": [60, 100], "color": "#fdecec"},
                     ],
                 },
-                title={"text": "Probabilite de defaut", "font": {"color": "#9aa0a6", "size": 14}},
+                title={"text": "Probabilite de defaut", "font": {"color": "#5f6368", "size": 14}},
             ))
             fig.update_layout(
                 height=230,
                 margin=dict(l=20, r=20, t=40, b=10),
                 paper_bgcolor="rgba(0,0,0,0)",
-                font={"color": "#fafafa"},
+                font={"color": "#1a1a1a"},
             )
             st.plotly_chart(fig, use_container_width=True)
 
@@ -306,11 +306,11 @@ with tab_overview:
         fig_imp = px.bar(
             imp_df.sort_values("importance"),
             x="importance", y="variable", orientation="h",
-            color="importance", color_continuous_scale=["#2a2e37", "#4ade80"],
+            color="importance", color_continuous_scale=["#dbe4f0", "#1f77d0"],
         )
         fig_imp.update_layout(
             paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-            font={"color": "#fafafa"}, showlegend=False, coloraxis_showscale=False,
+            font={"color": "#1a1a1a"}, showlegend=False, coloraxis_showscale=False,
             margin=dict(l=10, r=10, t=10, b=10), height=380,
         )
         st.plotly_chart(fig_imp, use_container_width=True)
@@ -322,10 +322,10 @@ with tab_overview:
         fig_pie = px.pie(
             status_df, names="statut", values="nombre", hole=0.55,
             color="statut",
-            color_discrete_map={"En regle": "#4ade80", "En defaut": "#ff6b6b"},
+            color_discrete_map={"En regle": "#1f9d55", "En defaut": "#d92c2c"},
         )
         fig_pie.update_layout(
-            paper_bgcolor="rgba(0,0,0,0)", font={"color": "#fafafa"},
+            paper_bgcolor="rgba(0,0,0,0)", font={"color": "#1a1a1a"},
             margin=dict(l=10, r=10, t=10, b=10), height=380,
         )
         st.plotly_chart(fig_pie, use_container_width=True)
@@ -334,12 +334,12 @@ with tab_overview:
     fig_box = px.box(
         df, x=df["loan_status"].map({0: "En regle", 1: "En defaut"}), y="loan_amnt",
         color=df["loan_status"].map({0: "En regle", 1: "En defaut"}),
-        color_discrete_map={"En regle": "#4ade80", "En defaut": "#ff6b6b"},
+        color_discrete_map={"En regle": "#1f9d55", "En defaut": "#d92c2c"},
         labels={"x": "Statut", "loan_amnt": "Montant du pret ($)"},
     )
     fig_box.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font={"color": "#fafafa"}, showlegend=False,
+        font={"color": "#1a1a1a"}, showlegend=False,
         margin=dict(l=10, r=10, t=10, b=10), height=350,
     )
     st.plotly_chart(fig_box, use_container_width=True)
